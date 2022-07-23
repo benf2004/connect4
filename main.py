@@ -2,6 +2,8 @@ import random
 import time
 import sys
 from playsound import playsound  # for sound effects
+
+import adam
 import ben  # add additional modules
 import copy
 
@@ -14,7 +16,7 @@ blank_spots = 42
 
 # MAIN CODE STARTS LINE 131
 # FUNCTION TO DISPLAY CURRENT BOARD:
-def user_move(gb1, user_marker, opp_marker):
+def user_move(gb1, user_marker, opp_marker, bs):
     valid_entry = False
     open_spot_check = False
 
@@ -143,8 +145,8 @@ red_marker = '\033[31m◍\033[0m'
 # EACH USER MAKE A LIST - that contains their name, bot name, & function name -  WITH THIS FORMAT:
 # ["Player Name", "BOT NAME", player_function (or module.function)
 # example:
-ben_list = ["BEN", "JAMES THE DESTROYER", ben.main]
-adam_list2 = ["ADAM", "BOB THE BUILDER", user_move]
+ben_list = ["BEN", "JAMES THE DESTROYER", user_move]
+adam_list2 = ["ADAM", "BOB THE BUILDER", adam.bot_move]
 
 # replace with whatever players are competing
 player_a = ben_list
