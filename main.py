@@ -1,6 +1,7 @@
 import random
 import time
 import sys
+from playsound import playsound  # for sound effects
 import ben  # add additional modules
 import copy
 
@@ -111,7 +112,7 @@ def delay_print(s):
     for c in s:
         sys.stdout.write(c)
         sys.stdout.flush()
-        time.sleep(0.01)
+        time.sleep(0.1)
 
 
 # Main Script Starts Here:
@@ -134,6 +135,10 @@ first_turn = random.randint(0, 1)
 
 dp = delay_print
 # introduction sequence
+
+# music
+playsound("background.wav", False)
+
 dp("WELCOME TO THE CONNECT4 BATTLE ARENA!\n")
 print()
 time.sleep(1)
@@ -154,12 +159,14 @@ if first_turn == 0:
 else:
     p1 = player_b
     p2 = player_a
-time.sleep(1.3)
+
+time.sleep(1)
 dp(f"{p1[1]} WILL GO FIRST THIS TIME!\n")
 time.sleep(1)
+print()
 dp("MAY THE BEST BOT WIN!\n")
-time.sleep(1)
-
+time.sleep(2)
+print()
 # players colors can be accessed using p1[3] or p2[3]
 p1.append(blue_marker)
 p2.append(red_marker)
@@ -171,6 +178,7 @@ while not game_finished:
     p1_choice = make_move(p1[3], p2[3], p1[2])
     print(f"I CHOOSE COLUMN {p1_choice}.")
     place_piece(p1_choice, p1[3])
+    playsound("plink.wav", False)
     check_for_win(p1[3])
     time.sleep(2)
 
@@ -180,5 +188,6 @@ while not game_finished:
         p2_choice = make_move(p2[3], p1[3], p2[2])
         print(f"I CHOOSE COLUMN {p2_choice}.")
         place_piece(p2_choice, p2[3])
+        playsound("plink.wav", False)
         check_for_win(p2[3])
         time.sleep(1)
