@@ -22,8 +22,8 @@ def user_move(gb1, user_marker, opp_marker):
         user_choice = input('Which column would you like to place a marker in? ')
         print('\n')
 
-        user_int = int(user_choice)
-        if user_int == 1 or user_int == 2 or user_int == 3 or user_int == 4 or user_int == 5 or user_int == 6 or user_int == 7:
+        if user_choice in ["1", "2", "3", "4", "5", "6", "7"]:
+            user_int = int(user_choice)
             valid_entry = True
             if gb[0][user_int - 1] == ' ':
                 open_spot_check = True
@@ -53,7 +53,7 @@ def place_piece(column_num, color, this_gb=gb):
             this_gb[x - 1][array_col] = color
             already_played = True
 
-    if already_played == False:
+    if not already_played:
         this_gb[5][array_col] = color
 
     print_board()
@@ -61,9 +61,9 @@ def place_piece(column_num, color, this_gb=gb):
     blank_spots -= 1
 
 
-def make_move(player_color, opponent_color, main_funct_name):
+def make_move(player_color, opponent_color, main_funct_name, blank_s):
     gb_copy = copy.deepcopy(gb)
-    col_choice = main_funct_name(gb_copy, player_color, opponent_color)
+    col_choice = main_funct_name(gb_copy, player_color, opponent_color, blank_s)
     return col_choice
 
 
@@ -154,8 +154,8 @@ game_finished = False
 first_turn = random.randint(0, 1)
 
 dp = delay_print
-# introduction sequence
 
+# introduction sequence
 # music
 playsound("background.wav", False)
 
@@ -170,6 +170,7 @@ print()
 dp(f"WHO WILL WIN? THE MIGHTY {player_a[0]} OR THE FIERCE {player_b[0]}?\n")
 print()
 dp("I'LL FlIP A COIN TO SEE WHO GOES FIRST\n")
+time.sleep(1.5)
 
 global p1
 global p2
@@ -180,9 +181,7 @@ else:
     p1 = player_b
     p2 = player_a
 
-time.sleep(1)
 dp(f"{p1[1]} WILL GO FIRST THIS TIME!\n")
-time.sleep(1)
 print()
 dp("MAY THE BEST BOT WIN!\n")
 time.sleep(2)
@@ -195,7 +194,7 @@ print_board()
 while not game_finished:
     print(f"IT'S {p1[1]}'S TURN!")
     # time.sleep(1)
-    p1_choice = make_move(p1[3], p2[3], p1[2])
+    p1_choice = make_move(p1[3], p2[3], p1[2], blank_spots)
     print(f"I CHOOSE COLUMN {p1_choice}.")
     place_piece(p1_choice, p1[3])
     playsound("plink.wav", False)
@@ -205,7 +204,7 @@ while not game_finished:
     if not game_finished:
         print(f"IT'S {p2[1]}'S TURN!")
         # time.sleep(1)
-        p2_choice = make_move(p2[3], p1[3], p2[2])
+        p2_choice = make_move(p2[3], p1[3], p2[2], blank_spots)
         print(f"I CHOOSE COLUMN {p2_choice}.")
         place_piece(p2_choice, p2[3])
         playsound("plink.wav", False)

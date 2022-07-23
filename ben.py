@@ -2,7 +2,7 @@ import random
 import copy
 
 
-def main(gb1, my_color, opponent_col):
+def main(gb1, my_color, opponent_col, blank_spots):
     reset_gb = copy.deepcopy(gb1)
     blue_marker = '\033[34m◍\033[0m'
     red_marker = '\033[31m◍\033[0m'
@@ -15,10 +15,10 @@ def main(gb1, my_color, opponent_col):
         print('-----------------------------')
 
     def place_piece(array_col, color):
-        for x in range(1, 6):
-            if gb1[x][array_col] != ' ':
-                gb1[x - 1][array_col] = color
-                return x - 1
+        for y in range(1, 6):
+            if gb1[y][array_col] != ' ':
+                gb1[y - 1][array_col] = color
+                return y - 1
 
         gb1[5][array_col] = color
         return 5
@@ -92,9 +92,6 @@ def main(gb1, my_color, opponent_col):
         prefs = {0: 2, 1: 4, 2: 6, 3: 10, 4: 6, 5: 4, 6: 2}
         return prefs[col]
 
-    other_color = {blue_marker: red_marker, red_marker: blue_marker}
-    opponent_col = other_color[my_color]
-
     move_options = []
     for x in range(7):
         score = 0
@@ -109,14 +106,33 @@ def main(gb1, my_color, opponent_col):
         if check_for_win(my_color):
             score += 1000
         score += order_col_pref(x)
+        oc = opponent_col
+        mc = my_color
         if x in [1, 2, 3, 4, 5]:
             if cf(y, x - 1) == my_color or cf(y, x + 1) == my_color:
                 score += 20
+            if cf(y, x + 1) == my_color and cf(y, x - 1) == my_color:
+                score += 30
         if x in [2, 3, 4]:
             if cf(y, x - 1) == my_color and cf(y, x - 2) == my_color and cf(y, x + 1) == " ":
-                score += 50
+                score += 40
             if cf(y, x + 1) == my_color and cf(y, x + 2) == my_color and cf(y, x - 1) == " ":
+                score += 40
+            if  (cf(y, x+1) == my_color and cf(y, x+2) == my_color) or (cf(y, x-1) == my_color and cf(y, x-2)):
                 score += 30
+            if (cf(y, x + 1) == opponent_col and cf(y, x + 2) == opponent_col) or (cf(y, x-2) == opponent_col and cf(y, x-1) == opponent_col):
+                score += 35
+        if x in [5, 6]:
+            if cf(y, x - 1) == oc and cf(y, x - 2) == oc:
+                score += 35
+        if x in [0, 1]:
+            if cf (y, x + 1) == oc and cf(y, x + 2) == oc:
+                score += 35
+        if y < 4:
+            # print(cf(y+1, x))
+            # print(cf(y+2, x))
+            if cf(y + 1, x) == opponent_col and cf(y+2, x) == opponent_col:
+                score += 35
 
         place_piece(x, my_color)
         if check_for_win(my_color):
