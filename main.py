@@ -5,7 +5,7 @@ from playsound import playsound  # for sound effects
 import ben  # add additional modules
 import copy
 
-# initialize gameboard:
+# initialize game board:
 numRows = 6
 numColumns = 7
 gb = [[' ' for i in range(numColumns)] for j in range(numRows)]
