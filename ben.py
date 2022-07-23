@@ -7,6 +7,13 @@ def main(gb1, my_color, opponent_col):
     blue_marker = '\033[34m◍\033[0m'
     red_marker = '\033[31m◍\033[0m'
 
+    def print_board(gb):
+        print(' (1) (2) (3) (4) (5) (6) (7)')
+        for x in range(6):
+            print('-----------------------------')
+            print(f'| {gb[x][0]} | {gb[x][1]} | {gb[x][2]} | {gb[x][3]} | {gb[x][4]} | {gb[x][5]} | {gb[x][6]} |')
+        print('-----------------------------')
+
     def place_piece(array_col, color):
         for x in range(1, 6):
             if gb1[x][array_col] != ' ':
@@ -111,27 +118,26 @@ def main(gb1, my_color, opponent_col):
             if cf(y, x + 1) == my_color and cf(y, x + 2) == my_color and cf(y, x - 1) == " ":
                 score += 30
 
-        y = place_piece(x, my_color)
-        while y != 0:
-            if check_for_win(my_color):
-                gb1 = copy.deepcopy(reset_gb)
-                y = place_piece(x, my_color)
-                y = place_piece(x, opponent_col)
-                y = place_piece(x, my_color)
-                if check_for_win(my_color):
-                    score += 120
+        place_piece(x, my_color)
+        if check_for_win(my_color):
+            score -= 200
             gb1 = copy.deepcopy(reset_gb)
             place_piece(x, my_color)
             place_piece(x, opponent_col)
-            if check_for_win(opponent_col):
-                score -= 400
-            y = 0
+            place_piece(x, my_color)
+            if check_for_win(my_color):
+                score += 120
+        gb1 = copy.deepcopy(reset_gb)
+        place_piece(x, my_color)
+        place_piece(x, opponent_col)
+        if check_for_win(opponent_col):
+            score -= 200
 
         # check for opponent piece
         gb1 = copy.deepcopy(reset_gb)
         y = place_piece(x, opponent_col)
         if check_for_win(opponent_col):
-            score += 300
+            score += 490
         if x in [1, 2, 3, 4]:
             if cf(y, x - 1) == opponent_col or cf(y, x + 1) == opponent_col:
                 score += 30
@@ -139,5 +145,5 @@ def main(gb1, my_color, opponent_col):
         gb1 = copy.deepcopy(reset_gb)
 
         move_options.append([score, x + 1])
-        # print(move_options)
+    # print(move_options)
     return sort_choices(move_options)

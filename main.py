@@ -14,6 +14,25 @@ blank_spots = 42
 
 # MAIN CODE STARTS LINE 131
 # FUNCTION TO DISPLAY CURRENT BOARD:
+def user_move(gb1, user_marker, opp_marker):
+    valid_entry = False
+    open_spot_check = False
+
+    while valid_entry == False or open_spot_check == False:
+        user_choice = input('Which column would you like to place a marker in? ')
+        print('\n')
+
+        user_int = int(user_choice)
+        if user_int == 1 or user_int == 2 or user_int == 3 or user_int == 4 or user_int == 5 or user_int == 6 or user_int == 7:
+            valid_entry = True
+            if gb[0][user_int - 1] == ' ':
+                open_spot_check = True
+
+        if valid_entry == False or open_spot_check == False:
+            print('Invalid option, please try again')
+
+    return user_int
+
 def print_board():
     print(' (1) (2) (3) (4) (5) (6) (7)')
     for x in range(6):
@@ -124,7 +143,7 @@ red_marker = '\033[31m◍\033[0m'
 # ["Player Name", "BOT NAME", player_function (or module.function)
 # example:
 ben_list = ["BEN", "JAMES THE DESTROYER", ben.main]
-adam_list2 = ["ADAM", "BOB THE BUILDER", ben.main]
+adam_list2 = ["ADAM", "BOB THE BUILDER", user_move]
 
 # replace with whatever players are competing
 player_a = ben_list
@@ -172,9 +191,10 @@ p1.append(blue_marker)
 p2.append(red_marker)
 print_board()
 
+
 while not game_finished:
     print(f"IT'S {p1[1]}'S TURN!")
-    time.sleep(1)
+    #time.sleep(1)
     p1_choice = make_move(p1[3], p2[3], p1[2])
     print(f"I CHOOSE COLUMN {p1_choice}.")
     place_piece(p1_choice, p1[3])
@@ -184,7 +204,7 @@ while not game_finished:
 
     if not game_finished:
         print(f"IT'S {p2[1]}'S TURN!")
-        time.sleep(1)
+        #time.sleep(1)
         p2_choice = make_move(p2[3], p1[3], p2[2])
         print(f"I CHOOSE COLUMN {p2_choice}.")
         place_piece(p2_choice, p2[3])
