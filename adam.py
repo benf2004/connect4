@@ -1,6 +1,7 @@
 import random
-import time
 import copy
+
+
 def bot_move(gb, bot_marker, user_marker, blank_spots):
     def check_open_columns():
         global safe_spots
@@ -477,6 +478,7 @@ def bot_move(gb, bot_marker, user_marker, blank_spots):
             if hgb[x + 2][y + 2] == hgb[x + 1][y + 1] == hgb[x][y] == marker and hgb[x + 3][y + 3] == ' ':
                 if (y + 1) not in good_plays:
                     good_plays.append(y + 1)
+
     global safe_spots
     global bot_already_played
     global good_plays
@@ -491,7 +493,6 @@ def bot_move(gb, bot_marker, user_marker, blank_spots):
         print('\nI am the Michael Jordan of Connect Four\n')
     if catch_phrase_choice == 4:
         print('\nI\'ll just roll a dice to choose where to play...\n')
-    time.sleep(2)
 
     bot_already_played = False
 
