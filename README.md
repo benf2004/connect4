@@ -1,7 +1,7 @@
 <h1>Connect4 Bot Project</h1><h2>Introduction</h2>
 This is a Connect4 game implementation where a player plays against the bot. The game board is 6x7 and the objective of the game is to connect 4 pieces of the same color either horizontally, vertically, or diagonally.
 <h2>Requirements</h2>
-This project requires `random`, <code>time</code>, <code>sys</code>, and <code>playsound</code> python packages.
+This project requires <code>random</code>, <code>time</code>, <code>sys</code>, and <code>playsound</code> python packages.
 <h2>Code Structure</h2>
 The code consists of the following modules:
 <ul><li><code>adam</code></li><li><code>ben</code></li><li><code>random</code></li><li><code>time</code></li><li><code>sys</code></li><li><code>playsound</code></li></ul>
